@@ -1,5 +1,5 @@
-
 const Employee = require('../lib/Employee');
+
 describe("Methods", () => {
     test('can we get name by calling getName()', () => {
         const name = 'Jake';
@@ -17,7 +17,7 @@ describe("Methods", () => {
         expect(employee.getEmail()).toBe(email);
     })
     test('can we get role by calling getRole()', () => {
-        const employee = new Employee('Jake', 23, email)
+        const employee = new Employee('Jake', 23, 'email@email.com')
         expect(employee.getRole()).toBe('Employee');
     })
 })
