@@ -3,6 +3,9 @@ const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
+const fs = require('fs');
+const createHTML = require('./src/createHTML');
+const path = require('path');
 
 const team = [];
 
@@ -91,7 +94,7 @@ const employeeQuestion = [
 function getManager() {
     inquirer.prompt(managerQuestions)
     .then(mAnswers => {
-        const manager = new Manager(mAnswers.name, mAnswers.id, mAnswers.email, mAnswers.officeNumber);
+        const manager = new Manager(mAnswers.name, mAnswers.id, mAnswers.email, mAnswers.officeNumber, 'Manager');
         team.push(manager);
         getNextEmployee();
     })
@@ -104,43 +107,40 @@ function getNextEmployee() {
             case 'Intern':
                 inquirer.prompt(internQuestions)
                 .then(answers => {
-                    const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
-                    team.push(intern)
+                    const intern = new Intern(answers.name, answers.id, answers.email, answers.school, 'Intern');
+                    team.push(intern);
+                    console.log(intern);
                     getNextEmployee();
                 });
             break;
             case 'Engineer':
                 inquirer.prompt(engineerQuestions)
                 .then(answers => {
-                    const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+                    const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github, 'Engineer');
                     team.push(engineer);
+                    console.log(engineer);
                     getNextEmployee();
                 });
             break;
             case 'Done adding members':
-                
-                
+                generatePage(team);
         }
     })
 }
 
-
-function getEngineer() {
-    inquirer.prompt(engineerQuestions)
-    .then(eAnswers => {
-        const engineer = new Engineer(eAnswers.name, eAnswers.id, eAnswers.email, eAnswers.school);
-        team.push(engineer);
-        // getNextEmployee();
+function writeToFile(fileName, data) {
+    fs.writeFile(path.join(__dirname, fileName), data, function(err){
+        if(err)throw err
+        console.log('File Written!');
     })
 }
 
-function getIntern() {
-    inquirer.prompt(internQuestions)
-    .then(iAnswers => {
-        const intern = new Intern(iAnswers.name, iAnswers.id, iAnswers.email, iAnswers.github);
-        team.push(intern);
-        // getNextEmployee();
-    })
-}
 
+
+
+function generatePage(team) {
+    console.log('Creating HTML...');
+    const html = createHTML(team);
+    return writeToFile('team.html', html);
+}
 getManager();
