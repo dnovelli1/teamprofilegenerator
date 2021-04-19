@@ -92,6 +92,7 @@ const employeeQuestion = [
 
 
 function getManager() {
+    console.log('-----------Manager Identification------------');
     inquirer.prompt(managerQuestions)
     .then(mAnswers => {
         const manager = new Manager(mAnswers.name, mAnswers.id, mAnswers.email, mAnswers.officeNumber, 'Manager');
@@ -105,6 +106,7 @@ function getNextEmployee() {
     .then(function (data) {
         switch (data.choice) {
             case 'Intern':
+                console.log('----------Intern Information----------');
                 inquirer.prompt(internQuestions)
                 .then(answers => {
                     const intern = new Intern(answers.name, answers.id, answers.email, answers.school, 'Intern');
@@ -114,6 +116,7 @@ function getNextEmployee() {
                 });
             break;
             case 'Engineer':
+                console.log('-----------Engineer Information----------');
                 inquirer.prompt(engineerQuestions)
                 .then(answers => {
                     const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github, 'Engineer');
