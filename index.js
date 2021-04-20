@@ -10,7 +10,7 @@ const path = require('path');
 const team = [];
 
 
-
+// Questions for manager
 const managerQuestions = [
     {
         type: 'input',
@@ -33,7 +33,7 @@ const managerQuestions = [
         name: 'officeNumber'
     },
 ]
-
+// Questions for Engineer
 const engineerQuestions = [
     {
         type: 'input',
@@ -56,7 +56,7 @@ const engineerQuestions = [
         name: 'github'
     },
 ]
-
+// Questions for Intern
 const internQuestions = [
     {
         type: 'input',
@@ -79,7 +79,7 @@ const internQuestions = [
         name: 'school'
     },
 ]
-
+// Question to determine if user is done adding employees or not
 const employeeQuestion = [
     {
         type: 'list',
@@ -90,7 +90,7 @@ const employeeQuestion = [
 ]
 
 
-
+// Initial function to be run and receive manager information
 function getManager() {
     console.log('-----------Manager Identification------------');
     inquirer.prompt(managerQuestions)
@@ -100,11 +100,12 @@ function getManager() {
         getNextEmployee();
     })
 }
-
+// Function to be run to choose which employees to add or end the questions
 function getNextEmployee() {
     inquirer.prompt(employeeQuestion)
     .then(function (data) {
         switch (data.choice) {
+            // Case for adding an intern
             case 'Intern':
                 console.log('----------Intern Information----------');
                 inquirer.prompt(internQuestions)
@@ -115,6 +116,7 @@ function getNextEmployee() {
                     getNextEmployee();
                 });
             break;
+            // Case for adding an engineer
             case 'Engineer':
                 console.log('-----------Engineer Information----------');
                 inquirer.prompt(engineerQuestions)
@@ -125,12 +127,13 @@ function getNextEmployee() {
                     getNextEmployee();
                 });
             break;
+            // Case for being done.
             case 'Done adding members':
                 generatePage(team);
         }
     })
 }
-
+// Callback function to write file
 function writeToFile(fileName, data) {
     fs.writeFile(path.join(__dirname, fileName), data, function(err){
         if(err)throw err
@@ -140,7 +143,7 @@ function writeToFile(fileName, data) {
 
 
 
-
+// Function to generate html page
 function generatePage(team) {
     console.log('Creating HTML...');
     const html = createHTML(team);
