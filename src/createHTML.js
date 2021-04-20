@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+// Initial create HTML function, plugging in the generated cards with a template literal.
 function createHTML(data) {
     return `
 <!DOCTYPE html>
@@ -44,7 +45,7 @@ function createHTML(data) {
 </html>
   `
 }
-
+// Function to determine role being added, then calling the correct function
 function allCards (data) {
     return data.map((data) => {
         let role = data.getRole();
@@ -63,7 +64,7 @@ function allCards (data) {
 }
 
 
-
+// Create a manager card
 function createManager(data) {
     return `
             <div class= "card cardbody">
@@ -87,7 +88,7 @@ function createManager(data) {
             </div>`
 }
 
-
+// Create an intern card
 function createIntern(data) {
      return `
             <div class= "card cardbody">
@@ -110,7 +111,7 @@ function createIntern(data) {
                 </div>
             </div>`
 }
-
+//  Create an engineer card
 function createEngineer(data) {
     return `
             <div class= "card cardbody">
@@ -133,5 +134,5 @@ function createEngineer(data) {
                 </div>
             </div>`
 }
-
+// exports the createHTML function
 module.exports = createHTML;
